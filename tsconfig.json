@@ -6,7 +6,8 @@
       "@/components/*": ["./components/*"], 
       "@/app/*": ["/app/*"],
       "@/models/*": ["/models/*"],
-      "@/utils/*": ["/utils/*"]
+      "@/utils/*": ["/utils/*"],
+      "@/api/*": ["/api/*"],
     },
     "lib": [
       "dom",

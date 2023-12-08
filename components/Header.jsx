@@ -9,7 +9,7 @@ const Header = () => {
         <div className = "my-10">
             <Link href="/">
             <h1
-            className= {`text-[60px] font-baloo blue_gradient text-opacity-70 text-center ${baloo.className}`}
+            className= {`text-[70px] font-baloo blue_gradient text-opacity-70 text-center ${baloo.className}`}
             style={{ lineHeight: '1' }}
             >
                 GearShare

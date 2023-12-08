@@ -14,8 +14,8 @@ export const connectToDB = async () => {
         await mongoose.connect(process.env.MONGODB_URI, {
             dbName: "instruments", 
             //Deprecated options, commenting out: 
-            // useNewUrlParser: true,
-            // useUnifiedTopology: true,
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
         })
 
         isConnected = true; 

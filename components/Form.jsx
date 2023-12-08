@@ -4,7 +4,7 @@ import Link from "next/link";
 const Form = ({ type, item, setItem, submitting, handleSubmit }) => {
     return (
         <section className="w-full max-w-full flex-start text-left flex-col">
-            <h1 className="head_text orange_gradient font-inter">
+            <h1 className="head_text orange_gradient font-inter self-center">
                 <span>{type} Your Gear</span>
             </h1>
             {/* <p className="desc text-left max-w-md">
@@ -13,38 +13,39 @@ const Form = ({ type, item, setItem, submitting, handleSubmit }) => {
 
             <form
                 onSubmit={handleSubmit}
-                className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"
+                className="mt-10 md:w-[700px] sm:w-[500px] max-w-xl flex flex-col gap-7 glassmorphism"
             >
                 <label>
                     <span className="font-satoshi font-semibold text-base text-gray-700">
                         Name
                     </span>
 
-                    <textarea
+                    <input
                         value={item.title}
                         onChange={(e) =>
                             setItem({ ...item, title: e.target.value })
                         }
                         placeholder="i.e. Gibson SG"
                         required
-                        className="form_textarea"
-                    ></textarea>
+                        className="form_input"
+                    ></input>
                 </label>
                 <label>
                     <span className="font-satoshi font-semibold text-base text-gray-700">
                         Price <span className="text-sm font-normal text-gray-500">(per day)</span>
                     </span>
-
-                    <textarea
+                    <input
                         value={item.price}
                         onChange={(e) =>
                             setItem({ ...item, price: e.target.value })
                         }
                         placeholder="i.e. $50"
                         required
-                        className="form_textarea"
-                    ></textarea>
+                        className="form_input"
+                    ></input>
+
                 </label>
+
                 <label>
                     <span className="font-satoshi font-semibold text-base text-gray-700">
                         Description
@@ -65,15 +66,15 @@ const Form = ({ type, item, setItem, submitting, handleSubmit }) => {
                         Image
                     </span>
 
-                    <textarea
+                    <input
                         value={item.image}
                         onChange={(e) =>
                             setItem({ ...item, image: e.target.value })
                         }
                         placeholder="i.e. copy image address"
                         required
-                        className="form_textarea"
-                    ></textarea>
+                        className="form_input"
+                    ></input>
                 </label>
 
 
