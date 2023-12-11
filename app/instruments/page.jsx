@@ -8,6 +8,7 @@ import InstrumentCard from "@/components/InstrumentCard";
 import Image from "next/image";
 import DateSelect from "@/components/DateSelect";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const page = () => {
     // const router = useRouter();
@@ -18,6 +19,8 @@ const page = () => {
         image: "",
         creator: "",
     });
+
+    const { data: session } = useSession();
 
     const { date, setDate, daysTotal, setDaysTotal } = useAppStore();
 
@@ -94,18 +97,16 @@ const page = () => {
                                     </div>
 
                                     <Link
-                                            href={`/users?id=${instrument.creator._id}`}
-                                        >
-                                      
-                                      <Image
+                                        href={`/users?id=${instrument.creator._id}`}
+                                    >
+                                        <Image
                                             src={instrument.creator.image}
                                             alt="user_image"
                                             width={32}
                                             height={32}
                                             className="rounded-full object-contain ml-3"
                                         />
-                                        </Link>
-
+                                    </Link>
                                 </div>
 
                                 <div className="flex text-indigo-950">
@@ -189,13 +190,15 @@ const page = () => {
                 </section>
 
                 <div className="flex justify-center mt-4">
-                    <button type="button" className="book_btn">
-                        {daysTotal
-                            ? `Book for ${daysTotal} days x $${
-                                  instrument.price
-                              } = $${daysTotal * instrument.price}`
-                            : `Book`}
-                    </button>
+                    <Link href={`/chat/${session?.user.id}--${instrument.creator._id}`}>
+                        <button type="button" className="book_btn">
+                            {daysTotal
+                                ? `Book for ${daysTotal} days x $${
+                                      instrument.price
+                                  } = ${daysTotal * instrument.price}`
+                                : `Book`}
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>

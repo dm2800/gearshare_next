@@ -6,7 +6,6 @@ import Header from "@/components/Header";
 import {inter, roboto_mono, baloo} from './fonts'; 
 
 
-
 export const metadata = {
     title: "GearShare",
     description: "Lend and borrow your favorite gear",

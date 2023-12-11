@@ -22,6 +22,7 @@ const MyProfile = () => {
                 const res = await fetch(`/api/users/${session?.user.id}/instruments`); 
                 const data =  await res.json();
                 setInstruments(data);
+                console.log('client session', session);
                 console.log('get user instrus response', data);
             } catch(error) {
                 console.log('Get user instrus fetch error', error)

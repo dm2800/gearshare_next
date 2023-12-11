@@ -3,11 +3,11 @@
 
     "baseUrl": "./",
     "paths": {
-      "@/components/*": ["./components/*"], 
-      "@/app/*": ["/app/*"],
-      "@/models/*": ["/models/*"],
-      "@/utils/*": ["/utils/*"],
-      "@/api/*": ["/api/*"],
+      "@/components/*": ["components/*"], 
+      "@/app/*": ["app/*"],
+      "@/models/*": ["models/*"],
+      "@/utils/*": ["utils/*"],
+      "@/api/*": ["api/*"],
     },
     "lib": [
       "dom",
