@@ -37,7 +37,7 @@ export const POST = async (req) => {
         console.log("message", message);
 
         //notify all connected chat room clients 
-        await pusherServer.trigger(toPusherKey(`chat:${chatId}`), 'incoming message', message); 
+        await pusherServer.trigger(toPusherKey(`chat:${chatId}`), 'incoming-message', message); 
 
         
         //all valid, send the message
