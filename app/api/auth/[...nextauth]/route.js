@@ -18,10 +18,11 @@ const authOptions = {
             const sessionUser = await User.findOne({
                 email: session.user.email
             })
-    
+
+            console.log('session user!', sessionUser);
+
             session.user.id = sessionUser._id.toString(); 
-            // console.log('session logging', session );
-    
+
             return session; 
     
         },

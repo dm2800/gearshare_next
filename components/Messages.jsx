@@ -1,11 +1,47 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { pusherClient } from "lib/pusher";
+import { useRef, useState, useEffect } from "react";
+import { format } from "date-fns";
+import {cn, toPusherKey} from '../lib/utils'; 
 
-const Messages = ({ initialMessages }) => {
-    const scrollDownRef = useRef(null);
+const Messages = ({ initialMessages, chatId, sessionId, chatPartner }) => {
+    
 
     const [messages, setMessages] = useState(initialMessages);
+
+    useEffect(() => {
+        pusherClient.subscribe(
+            toPusherKey(`chat:${chatId}`)
+        )
+
+        // console.log('to pusher key', toPusherKey(`chat:${chatId}`));
+
+        console.log('subscribed to', `user:${sessionId}`);
+
+        const messageHandler = (message) => {
+            console.log('in message handler');
+            setMessages((prev) => [message, ...prev])
+        }
+
+        pusherClient.bind('incoming-message', messageHandler)
+
+        return () => {
+            pusherClient.unsubscribe(
+                toPusherKey(`chat:${chatId}`)
+            )
+            pusherClient.unbind('incoming-message', messageHandler)
+        }
+    }, [chatId])
+
+
+    const scrollDownRef = useRef(null);
+
+
+    const formatTimestamp = (timestamp) => {
+        return format(timestamp, 'HH:mm')
+    }
+
 
     return (
         <div
@@ -42,10 +78,9 @@ const Messages = ({ initialMessages }) => {
                               })}>
                                 {message.text}{' '}
                                 <span className="ml-2 text-xs text-gray-400">
-                                  {message.timestamp}
+                                  {formatTimestamp(message.timestamp)}
                                 </span>
                               </span>
-
 
 
                             </div>

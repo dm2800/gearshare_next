@@ -9,6 +9,7 @@ import Image from "next/image";
 import DateSelect from "@/components/DateSelect";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { chatHrefConstructor } from "lib/utils";
 
 const page = () => {
     // const router = useRouter();
@@ -190,7 +191,7 @@ const page = () => {
                 </section>
 
                 <div className="flex justify-center mt-4">
-                    <Link href={`/chat/${session?.user.id}--${instrument.creator._id}`}>
+                    <Link href={`/chat/${chatHrefConstructor(session?.user.id, instrument.creator._id)}`}>
                         <button type="button" className="book_btn">
                             {daysTotal
                                 ? `Book for ${daysTotal} days x $${

@@ -36,7 +36,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "app/chat/[chatId]/page.jsx"  ],
+, "app/chat/[chatId]/page.jsx", "utils/chatDb.ts"  ],
   "exclude": [
     "node_modules"
   ]

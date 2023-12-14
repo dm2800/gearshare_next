@@ -90,7 +90,7 @@ const Nav = () => {
                                         type="button"
                                         onClick={() => {
                                             setToggleDropdown(false);
-                                            signOut; 
+                                            signOut({ callbackUrl: 'http://localhost:3000/' }); 
                                         }}
                                         className="mt-5 w-full black_btn"
                                     >Sign Out</button>
