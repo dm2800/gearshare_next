@@ -15,6 +15,9 @@ import { messageArrayValidator } from "lib/validations/message";
 const page = async ({ params }) => {
     const { chatId } = params;
 
+    // const parts = chatId.split('--')
+    // const chatUsersId = parts[0] + '--' + parts[1].split('-')[0];
+
     async function getChatMessages(chatId) {
         try {
             const results = await fetchRedis(
@@ -44,6 +47,7 @@ const page = async ({ params }) => {
     const { user } = session;
 
     const [userId1, userId2] = chatId.split("--");
+    // const [userId1, userId2] = chatUsersId.split("--");
 
     if (user.id !== userId1 && user.id !== userId2) {
         notFound();

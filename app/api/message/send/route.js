@@ -14,7 +14,13 @@ export const POST = async (req) => {
         const session = await getServerSession(authOptions);
 
         if (!session) return new Response("Unauthorized", { status: 401 });
+        
         const [userId1, userId2] = chatId.split("--");
+        
+        // new chatId
+        // const parts = chatId.split('--')
+        // const chatUsersId = parts[0] + '--' + parts[1].split('-')[0];
+        // const [userId1, userId2] = chatUsersId.split("--");
 
         if (session.user.id !== userId1 && session.user.id !== userId2) {
             return new Response("Unauthorized", { status: 401 });
