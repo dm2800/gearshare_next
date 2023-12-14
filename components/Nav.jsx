@@ -31,6 +31,9 @@ const Nav = () => {
                         <Link href="/create-instrument" className="black_btn">
                             List Your Gear
                         </Link>
+                        <Link href= {`/users/${session?.user.id}/messages`} className="black_btn">
+                            Messages
+                        </Link>
                         <button type="button" onClick={signOut} className="outline_btn">
                             Sign Out
                         </button>

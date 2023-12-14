@@ -8,6 +8,9 @@
       "@/models/*": ["models/*"],
       "@/utils/*": ["utils/*"],
       "@/api/*": ["api/*"],
+      "@/helpers/*": ["helpers/*"],
+      "@/lib/*": ["lib/*"],
+      "@/utils/*": ["utils/*"],
     },
     "lib": [
       "dom",

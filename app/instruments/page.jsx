@@ -10,6 +10,7 @@ import DateSelect from "@/components/DateSelect";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { chatHrefConstructor } from "lib/utils";
+import axios from "axios";
 
 const page = () => {
     // const router = useRouter();
@@ -30,6 +31,11 @@ const page = () => {
     const searchParams = useSearchParams();
 
     const instrumentId = searchParams.get("id");
+
+    const pairInstrument = async () => {
+        await axios.post('/api/instrument/pair', { id: instrumentId })
+        console.log('in pair instrument');
+    }
 
     useEffect(() => {
         const getSingleInstrument = async () => {
@@ -155,7 +161,7 @@ const page = () => {
                                     <div className="flex items-center">
                                         <div
                                             className="copy_btn"
-                                            onClick={() => {}}
+                                            onClick={() => { }}
                                         >
                                             <svg
                                                 width="15"
@@ -191,15 +197,20 @@ const page = () => {
                 </section>
 
                 <div className="flex justify-center mt-4">
-                    <Link href={`/chat/${chatHrefConstructor(session?.user.id, instrument.creator._id)}`}>
-                        <button type="button" className="book_btn">
-                            {daysTotal
-                                ? `Book for ${daysTotal} days x $${
-                                      instrument.price
-                                  } = ${daysTotal * instrument.price}`
-                                : `Book`}
-                        </button>
-                    </Link>
+
+                    {session?.user.id !== instrument.creator._id ?
+
+                        <Link href={`/chat/${chatHrefConstructor(session?.user.id, instrument.creator._id)}-${instrumentId}`}>
+                            <button type="button" className="book_btn" onClick={pairInstrument()}>
+                                {daysTotal
+                                    ? `Book for ${daysTotal} days x $${instrument.price
+                                    } = ${daysTotal * instrument.price}`
+                                    : `Book`}
+                            </button>
+                        </Link>
+                        : null
+                    }
+
                 </div>
             </div>
         </div>

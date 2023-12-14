@@ -11,14 +11,18 @@ import { fetchRedis } from "helpers/redis";
 import { reverse } from "dns";
 
 import { messageArrayValidator } from "lib/validations/message";
+import Instrument from "@/models/instrument";
 
 const page = async ({ params }) => {
     const { chatId } = params;
 
-    // const parts = chatId.split('--')
-    // const chatUsersId = parts[0] + '--' + parts[1].split('-')[0];
+    const segment = chatId.split('--')
+    const chatUsersId = segment[0] + '--' + segment[1].split('-')[0];
 
-    async function getChatMessages(chatId) {
+    const segment2 = chatId.split('-');
+    const instrumentId = segment2.pop();
+
+    async function getChatMessages(chatUsersId) {
         try {
             const results = await fetchRedis(
                 "zrange",
@@ -46,8 +50,8 @@ const page = async ({ params }) => {
 
     const { user } = session;
 
-    const [userId1, userId2] = chatId.split("--");
-    // const [userId1, userId2] = chatUsersId.split("--");
+    // const [userId1, userId2] = chatId.split("--");
+    const [userId1, userId2] = chatUsersId.split("--");
 
     if (user.id !== userId1 && user.id !== userId2) {
         notFound();
@@ -56,17 +60,13 @@ const page = async ({ params }) => {
     const chatPartnerId = user.id === userId1 ? userId2 : userId1;
 
     const chatPartner = await User.findOne({ _id: chatPartnerId });
+    const instrument  = await Instrument.findOne({ _id: instrumentId });
 
     const initialMessages = await getChatMessages(chatId);
 
     return (
         <div>
-            {/* <pre>{JSON.stringify(session)}</pre> */}
-            {/* <p>{params.chatId}</p> */}
-            <p>{user.name}</p>
-            <p>{user.id}</p>
-            <p>{chatPartner.username}</p>
-
+            <p className='head_text !text-[20px] mb-3'>{instrument.title}</p>
             <div className="flex-1 justify-between flex flex-col h-full max-h-[calc(100vh-6rem)]">
                 <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
                     <div className="relative flex items-center space-x-4">
