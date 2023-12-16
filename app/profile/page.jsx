@@ -15,21 +15,22 @@ const MyProfile = () => {
     const router = useRouter(); 
 
 
-
     useEffect(()=> {
         const getAllUserInstruments = async () => {
             try {
                 const res = await fetch(`/api/users/${session?.user.id}/instruments`); 
                 const data =  await res.json();
                 setInstruments(data);
-                console.log('client session', session);
+                // console.log('first', session?.user.id)
+                // console.log('client session', session);
                 console.log('get user instrus response', data);
+
             } catch(error) {
                 console.log('Get user instrus fetch error', error)
             }
         }
         
-        if(session?.user.id) getAllUserInstruments(); 
+        if(session?.user.id) getAllUserInstruments();
     }, [])
 
     const handleEdit = (instrument) => {

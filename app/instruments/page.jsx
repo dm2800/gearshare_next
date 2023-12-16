@@ -13,7 +13,6 @@ import { chatHrefConstructor } from "lib/utils";
 import axios from "axios";
 
 const page = () => {
-    // const router = useRouter();
     const [instrument, setInstrument] = useState({
         title: "",
         price: "",

@@ -9,7 +9,9 @@ const useAppStore = create((set) => ({
     }],
     setDate: (data) => set(() => ({date: data})), 
     daysTotal: 0,
-    setDaysTotal: (days) => set(() => ({daysTotal: days}))
+    setDaysTotal: (days) => set(() => ({daysTotal: days})),
+    activeChatId: null,
+    setActiveChatId: (data) => set(() => ({activeChatId: data}))
 }))
 
 

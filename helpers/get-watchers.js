@@ -1,5 +1,6 @@
 import {fetchRedis} from './redis'; 
 import User from "@/models/user";
+import Instrument from "@/models/instrument";
 
 export const getWatchersByUserId = async (userId) => {
     //retrieve watchers for current user 
@@ -19,3 +20,6 @@ export const getWatchersByUserId = async (userId) => {
     )
     return watchers; 
 }
+
+
+
