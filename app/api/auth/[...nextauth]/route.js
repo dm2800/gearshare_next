@@ -19,7 +19,7 @@ const authOptions = {
                 email: session.user.email
             })
 
-            console.log('session user!', sessionUser);
+            // console.log('session user!', sessionUser);
 
             session.user.id = sessionUser._id.toString(); 
 

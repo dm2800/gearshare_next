@@ -25,6 +25,7 @@ const InstrumentSchema = new Schema({
     },
 })
 
+export {InstrumentSchema}; 
 
 const Instrument = models.Instrument || model('Instrument', InstrumentSchema); 
 

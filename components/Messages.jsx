@@ -9,6 +9,7 @@ const Messages = ({ initialMessages, chatId, sessionId, chatPartner }) => {
     
 
     const [messages, setMessages] = useState(initialMessages);
+    console.log('initial messages', initialMessages)
 
     useEffect(() => {
         pusherClient.subscribe(
@@ -46,11 +47,13 @@ const Messages = ({ initialMessages, chatId, sessionId, chatPartner }) => {
     return (
         <div
             id="messages"
-            className="flex h-full flex-1 flex-col-reverse gap-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+            className="flex h-full flex-1 flex-col-reverse gap-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch bg-white/40 rounded-[10px] mr-4"
         >
             <div ref={scrollDownRef} />
 
-            {messages.map((message, index) => {
+            
+
+            { messages.length ? messages.map((message, index) => {
                 const isCurrentUser = message.senderId === sessionId;
 
                 const hasNextMessageFromSameUser =
@@ -81,13 +84,11 @@ const Messages = ({ initialMessages, chatId, sessionId, chatPartner }) => {
                                   {formatTimestamp(message.timestamp)}
                                 </span>
                               </span>
-
-
                             </div>
                         </div>
                     </div>
                 );
-            })}
+            }) : <p className='text-gray-600'>Start a conversation with {chatPartner.username}.</p>}
         </div>
     );
 };

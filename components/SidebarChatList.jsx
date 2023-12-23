@@ -1,71 +1,48 @@
-'use client';
+"use client";
 import { chatHrefConstructor } from "@/lib/utils";
+// import { getServerSession } from "next-auth";
+// import { authOptions } from "../app/api/auth/[...nextauth]/route";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
- 
+const SidebarChatList = ({ namesDict, processedWatchers }) => {
+    const { data: session } = useSession();
+    console.log('userwatchers in sidebar', processedWatchers); 
 
-// import React, { useEffect, useState } from 'react'
-// import { chatHrefConstructor } from '@/lib/utils';
-// import {getWatchersByInstrumentId} from '@/helpers/get-watchers-by-instrument';
+    //If I have user watchers, I have users and their favorites. 
+    //Now I just need to display only the favorites for which session user is the creator. 
+console.log('namesdict in sidebar', namesDict); 
 
+// console.log('object entries', Object.entries(userWatchers)); 
+// console.log('watcher name', userWatchers[0]);
 
-const SidebarChatList = ({watcherDict}) => {
+    return (
+        <div>
+        {processedWatchers &&
+            processedWatchers.map((watcher) => (
+                <div key = {watcher._id}>
+                    {watcher.favorites.map((favorite) => (
+                        
+                        <Link key ={favorite._id}
+                        href ={`/chat/${chatHrefConstructor(watcher._id, session?.user.id)}-${favorite._id}`} 
+                        
+                        className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex items-center justify-between gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
 
-    console.log('sidebar'); 
-
-    console.log('sidebar watchers', watcherDict)
-
-    const {data: session} = useSession(); 
-
-
-
-    // console.log('sidebar instruments', instruments); 
-
-//   useEffect(()=> {
-//     const results = watchers.map((watcher)=> {
-//       return (
-//         <li key={watcher.id}>
-//         <a
-//         //Must add instrument ID to chat generator 
-//           href={`/dashboard/chat/${chatHrefConstructor(
-//             sessionId,
-//             watcher._id
-//           )}`}
-//           className='text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'>
-//           {watcher.username}
-//           {/* {unseenMessagesCount > 0 ? (
-//             <div className='bg-indigo-600 font-medium text-xs text-white w-4 h-4 rounded-full flex justify-center items-center'>
-//               {unseenMessagesCount}
-//             </div>
-//           ) : null} */}
-//         </a>
-//       </li>
-//       )
-//     })
-    
-//     setWatcherList(results); 
-//   },[]);
-
-//   const [watcherList, setWatcherList] = useState([]); 
+                            <div className='flex-col'>
 
 
+                            <p>{favorite.title}</p>
+                            <p>{watcher.username}</p>
+                            </div>
+                            <img width={50} className="rounded-full" src = {favorite.image}></img>
+                        </Link>
+                    ))}
 
-  
-  return (
-    <div>
-      {Object.entries(watcherDict).map(([watcherId, instrumentId]) => (
-        <div key= {watcherId}>
 
-            <a href={`/chat/${chatHrefConstructor(watcherId, session?.user.id)}-${instrumentId}`} className='text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'>
-            <p>Watcher: {watcherId}</p>
-            <p>Instrument: {instrumentId}</p>
-            </a>
-            </div>
-      ))}
+                </div>
+            ))}
+    </div>
+    );
+};
 
-      
-      </div>
-  )
-}
-
-export default SidebarChatList
+export default SidebarChatList;

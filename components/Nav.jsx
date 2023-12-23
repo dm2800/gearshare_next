@@ -4,20 +4,24 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import {usePathname} from 'next/navigation'; 
 
 const Nav = () => {
     const [providers, setProviders] = useState(null);
     const [toggleDropdown, setToggleDropdown] = useState(false);
     const {data: session} = useSession(); 
+    const pathname = usePathname(); 
 
     useEffect(() => {
         const setUpProviders = async () => {
-            const response = await getProviders();
-            setProviders(response);
+            if (!providers) {
+                const response = await getProviders();
+                setProviders(response);
+            }
         };
 
         setUpProviders();
-    }, []);
+    }, [pathname]);
 
     return (
         <nav className="mb-10 flex justify-center ">
@@ -31,10 +35,10 @@ const Nav = () => {
                         <Link href="/create-instrument" className="black_btn">
                             List Your Gear
                         </Link>
-                        <Link href= {`/users/${session?.user.id}/messages`} className="black_btn">
+                        <Link href= {`/chat`} className="black_btn">
                             Messages
                         </Link>
-                        <button type="button" onClick={signOut} className="outline_btn">
+                        <button type="button" onClick={() => signOut({callbackUrl: 'http://localhost:3000'})} className="outline_btn">
                             Sign Out
                         </button>
                         <Link href="/profile" className="">
@@ -48,7 +52,7 @@ const Nav = () => {
                     </div>
                 ) : (
                     <>
-                        {providers &&
+                        {providers ?
                             Object.values(providers).map((provider) => (
                                 <button
                                     type="button"
@@ -56,7 +60,11 @@ const Nav = () => {
                                     onClick={() => signIn(provider.id)}
                                     className="black_btn"
                                 >Sign In</button>
-                            ))}
+                            )) : <button
+                            type="button"
+                            onClick={() =>{}}
+                            className="black_btn"
+                        >Loading...</button>}
                     </>
                 )}
             </div>
@@ -93,7 +101,7 @@ const Nav = () => {
                                         type="button"
                                         onClick={() => {
                                             setToggleDropdown(false);
-                                            signOut({ callbackUrl: 'http://localhost:3000/' }); 
+                                            signOut({ callbackUrl: 'http://localhost:3000' }); 
                                         }}
                                         className="mt-5 w-full black_btn"
                                     >Sign Out</button>

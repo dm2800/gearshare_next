@@ -63,21 +63,11 @@ const Feed = () => {
         getAllInstruments();
     }, []);
 
-    // const instrumentList = instruments.map((instrument) => (
-
-    //     <div key={instrument.id}>
-    //         <h1>{instrument.title}</h1>
-    //         <h4>{instrument.price}</h4>
-    //         {/* <Image src = {instrument.image} width={20} height={20}></Image> */}
-    //         <img src = {instrument.image} style = {{height: "400px"}}></img>
-    //     </div>
-    // )
-    // )
 
     return (
         <div>
-            <section classname="feed">
-                <form classname="relative w-full flex-center">
+            <section className="feed">
+                <form className="relative w-full flex-center">
                     <input
                         type="text"
                         placeholder="Search for gear"
@@ -94,15 +84,8 @@ const Feed = () => {
                     <InstrumentCardList data={instruments} />
                 )}
 
-                {/* before implementing search, no longer necessary */}
-                {/* 
-            <InstrumentCardList
-                data={instruments}
-                handleTagClick={()=> {}}
-            /> */}
             </section>
 
-            {/* <div>{instrumentList}</div> */}
         </div>
     );
 };

@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import useAppStore from "../store/useAppStore";
-import InstrumentCard from "@/components/InstrumentCard";
+import useAppStore from "../app/store/useAppStore";
 import Image from "next/image";
 import DateSelect from "@/components/DateSelect";
 import Link from "next/link";
@@ -12,7 +10,7 @@ import { useSession } from "next-auth/react";
 import { chatHrefConstructor } from "lib/utils";
 import axios from "axios";
 
-const page = () => {
+const InstrumentDetails = ({instrumentId}) => {
     const [instrument, setInstrument] = useState({
         title: "",
         price: "",
@@ -27,9 +25,9 @@ const page = () => {
 
     const [favorited, setFavorited] = useState("false");
 
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
 
-    const instrumentId = searchParams.get("id");
+    // const instrumentId = searchParams.get("id");
 
     const pairInstrument = async (instrumentId) => {
         try{
@@ -221,4 +219,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default InstrumentDetails;
