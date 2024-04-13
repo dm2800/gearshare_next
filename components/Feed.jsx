@@ -97,7 +97,7 @@ const Feed = () => {
                     ></input>
                 </form>
 
-                <LocalMap locations = {locations}/>
+                {/* <LocalMap locations = {locations}/> */}
 
                 {searchText ? (
                     <InstrumentCardList data={searchedResults} />
