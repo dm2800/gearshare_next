@@ -11,14 +11,25 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { chatHrefConstructor } from "lib/utils";
 import axios from "axios";
+import Map from "@/components/Map";
+import { Calligraffitti } from "next/font/google";
 
 const page = () => {
+
+    const router = useRouter(); 
+
     const [instrument, setInstrument] = useState({
         title: "",
         price: "",
         description: "",
         image: "",
         creator: "",
+        address: {
+            streetAddress: "", 
+            city: "", 
+            state: "", 
+            postalCode: ""
+        }
     });
 
     const { data: session } = useSession();
@@ -34,22 +45,22 @@ const page = () => {
     const pairInstrument = async (instrumentId) => {
         try{
             await axios.post('/api/instrument/pair', { id: instrumentId }); 
+            //This causes the server component for chat layout to refresh, bringing the updated favoritesByWatcher data. 
+            router.refresh(); 
             console.log('in pair instrument');
         }
         catch(error) {
             console.log('error in pair instrument', error);
         }
-        
-    }
+    }; 
 
     useEffect(() => {
         const getSingleInstrument = async () => {
             const response = await fetch(`/api/instrument/${instrumentId}`);
             const data = await response.json();
-
-            const { title, price, description, image, creator } = data;
-
-            setInstrument({ title, price, description, image, creator });
+            // console.log('data instrument', data);
+            const { title, price, description, image, creator, address } = data;
+            setInstrument({ title, price, description, image, creator, address });
         };
         if (instrumentId) getSingleInstrument();
     }, [instrumentId]);
@@ -200,6 +211,8 @@ const page = () => {
                     </section>
                 </section>
 
+                {instrument.address && instrument.address.streetAddress ? <Map address = {instrument.address}/> : null}
+
                 <div className="flex justify-center mt-4">
 
                     {session?.user.id !== instrument.creator._id ?
@@ -207,8 +220,10 @@ const page = () => {
                         <Link href={`/chat/${chatHrefConstructor(session?.user.id, instrument.creator._id)}-${instrumentId}`} scroll={false}>
                             <button type="button" className="book_btn" onClick={() => pairInstrument(instrumentId)}>
                                 {daysTotal
-                                    ? `Book for ${daysTotal} days x $${instrument.price
-                                    } = ${daysTotal * instrument.price}`
+                                    ? <>Book for {daysTotal} days x ${instrument.price
+                                    } = <span className="font-bold text-lg">
+                                        &nbsp; ${daysTotal * instrument.price}
+                                        </span> </>
                                     : `Book`}
                             </button>
                         </Link>
@@ -217,6 +232,8 @@ const page = () => {
 
                 </div>
             </div>
+
+            <h3></h3>
         </div>
     );
 };

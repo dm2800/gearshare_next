@@ -2,11 +2,15 @@ import { connectToDB } from "@/utils/database";
 import Instrument from "@/models/instrument";
 
 export const POST = async (req, res) => {
-    const { userId, title, description, price, image} = await req.json(); 
+    const { userId, title, description, price, image, address} = await req.json(); 
+
+    // console.log('title, address', title, address); 
 
     try {
         await connectToDB(); 
-        const newInstrument = new Instrument({creator: userId, title, description, price, image})
+        const newInstrument = new Instrument({creator: userId, title, description, price, image, address})
+
+        console.log('new instrument to be saved', newInstrument)
 
         await newInstrument.save(); 
 

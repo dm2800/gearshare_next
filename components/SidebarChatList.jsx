@@ -11,7 +11,7 @@ const SidebarChatList = ({ namesDict, processedWatchers }) => {
 
     //If I have user watchers, I have users and their favorites. 
     //Now I just need to display only the favorites for which session user is the creator. 
-console.log('namesdict in sidebar', namesDict); 
+// console.log('namesdict in sidebar', namesDict); 
 
 // console.log('object entries', Object.entries(userWatchers)); 
 // console.log('watcher name', userWatchers[0]);
@@ -32,7 +32,7 @@ console.log('namesdict in sidebar', namesDict);
 
 
                             <p>{favorite.title}</p>
-                            <p>{watcher.username}</p>
+                            <p className= "text-indigo-700">{watcher.username}</p>
                             </div>
                             <img width={50} className="rounded-full" src = {favorite.image}></img>
                         </Link>

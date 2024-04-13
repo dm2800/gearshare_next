@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import InstrumentCard from "./InstrumentCard";
 import Link from "next/link";
+import LocalMap from "@/components/LocalMap";
 
 const InstrumentCardList = ({ data, handleTagClick }) => {
     return (
@@ -20,6 +21,7 @@ const InstrumentCardList = ({ data, handleTagClick }) => {
 
 const Feed = () => {
     const [instruments, setInstruments] = useState([]);
+    const [locations, setLocations] = useState([]); 
 
     //search states
     const [searchTimeout, setSearchTimeout] = useState(null);
@@ -64,6 +66,23 @@ const Feed = () => {
     }, []);
 
 
+//This builds an array of all instrument addresses 
+    useEffect(()=> {
+        const updateLocations = async () => {
+            const newLocations = []; 
+
+            for (const instrument of instruments) {
+                if(!newLocations.includes(instrument.address)){
+                    newLocations.push(instrument.address)
+                }
+            }
+            setLocations(newLocations); 
+            console.log('locations', locations)
+        }
+        updateLocations(); 
+    }, [instruments]); 
+
+
     return (
         <div>
             <section className="feed">
@@ -77,6 +96,8 @@ const Feed = () => {
                         className="search_input peer"
                     ></input>
                 </form>
+
+                <LocalMap locations = {locations}/>
 
                 {searchText ? (
                     <InstrumentCardList data={searchedResults} />

@@ -10,6 +10,7 @@ import InstrumentDetails from "@/components/InstrumentDetails";
 
 import { messageArrayValidator } from "lib/validations/message";
 import Instrument from "@/models/instrument";
+import Link from "next/link";
 
 const page = async ({ params }) => {
     const { chatId } = params;
@@ -62,7 +63,10 @@ const page = async ({ params }) => {
 
     return (
         <div>
+            <Link href={`/instruments?id=${instrument._id}`}>
             <p className="head_text !text-[30px] !text-indigo-900">{instrument.title}</p>
+            </Link>
+            
             <div className="flex-1 justify-between flex flex-col h-full max-h-[calc(100vh-6rem)]">
                 <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
                     <div className="relative flex items-center space-x-4">
@@ -100,8 +104,8 @@ const page = async ({ params }) => {
             />
 
             <ChatInput chatPartner={chatPartner} chatId={chatId} />
-            <p className="head_text !text-[30px] !text-indigo-900/80 mb-2">Instrument Details</p>
-            <InstrumentDetails instrumentId = {instrumentId}/>
+            {/* <p className="head_text !text-[30px] !text-indigo-900/80 mb-2">Instrument Details</p> */}
+            {/* <InstrumentDetails instrumentId = {instrumentId}/> */}
         </div>
     );
 };

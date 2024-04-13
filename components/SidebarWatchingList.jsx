@@ -24,10 +24,7 @@ const SidebarWatchingList = async ({ favoritesbyWatcher }) => {
             <div>
                 {favoritesbyWatcher &&
                     Object.values(favoritesbyWatcher).map(
-                        async (instrument) => {
-                            const owner = await User.findOne({
-                                _id: instrument.creator._id,
-                            });
+                         (instrument) => {
                             return (
                                 <Link
                                     href={`/chat/${chatHrefConstructor(
@@ -43,7 +40,7 @@ const SidebarWatchingList = async ({ favoritesbyWatcher }) => {
                                         >
                                             <p>{instrument.title}</p>
                                             <p className="text-indigo-700">
-                                                {owner.username}
+                                                {instrument.creator.username}
                                             </p>
                                         </div>
 

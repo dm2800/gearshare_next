@@ -13,6 +13,7 @@ import {
 } from "@/helpers/get-watchers-by-instrument";
 import { notFound } from "next/navigation";
 import InstrumentDetails from "@/components/InstrumentDetails";
+// import useAppStore from "../store/useAppStore";
 
 const sidebarOptions = [
     {
@@ -40,12 +41,11 @@ const page = async ({ children }) => {
     if (!session) notFound();
 
     const instruments = await getAllUserInstruments(session.user.id);
-    console.log("user instruments in chat layout", instruments);
-
+    // console.log("user instruments in chat layout", instruments);
 
     const userWatchers = [];
 
-    //getting all watchers per user instrument 
+    //getting all watchers per user instrument
     for (const instrumentKey in instruments) {
         //if number of watchers is not 0
         const instrument = instruments[instrumentKey];
@@ -53,12 +53,21 @@ const page = async ({ children }) => {
             instrument._id.toString()
         );
         const watchers = await watchersPromise;
-        console.log(`instrument: ${instrument._id}, Watchers: ${watchers}`);
+        // console.log(`instrument: ${instrument._id}, Watchers: ${watchers}`);
 
-        for (const key in watchers) {
-            userWatchers.push(watchers[key]);
-        }
-        console.log("userWatchers array", userWatchers);
+        //push each instrument watcher if not already present in array 
+        watchers.forEach((watcher) => {
+            const watcherIdStr = watcher._id.toString();
+            if (
+                !userWatchers.some(
+                    (existingWatcher) =>
+                        existingWatcher._id.toString() === watcherIdStr
+                )
+            ) {
+                userWatchers.push(watcher);
+            }
+        });
+        // console.log("userWatchers array", userWatchers);
     }
 
     //Simplifying object to avoid recursion/serialization errors
@@ -78,10 +87,24 @@ const page = async ({ children }) => {
             _id: favorite._id.toString(),
         })),
     }));
-    // console.log('processed watchers', processedWatchers);
+    // console.log("processed watchers", processedWatchers);
 
     const favoritesbyWatcher = await getFavoriteInstruments(session.user.id);
-    // console.log('favorites by watcher', favoritesbyWatcher);
+    console.log('favorites by watcher', favoritesbyWatcher);
+    
+    // const { fetchFavoritesByWatcher, favoritesByWatcher} = useAppStore((state) => ({
+    //     fetchFavoritesByWatcher: state.fetchFavoritesByWatcher, 
+    //     favoritesByWatcher: state.favoritesByWatcher
+    // })); 
+    
+    // const favoritesByWatcher = await fetchFavoritesByWatcher(session.user.id);
+
+
+    // useEffect(()=> {
+    //     if(watcherId) {
+    //         fetchFavoritesByWatcher(watcherId);
+    //     }
+    // }, [watcherId, fetchFavoritesByWatcher])
 
     return (
         <div className="w-3/4 flex">

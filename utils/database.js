@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 
 let isConnected = false; 
 
+// mongoose.set('debug', true); 
+
 export const connectToDB = async () => {
     mongoose.set('strictQuery', true); 
 

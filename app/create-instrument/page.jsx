@@ -13,6 +13,13 @@ const CreateInstrument = () => {
         price: "",
         description: "",
         image: "",
+        //adding address field
+        address: {
+            streetAddress: "",
+            city: "",
+            state: "",
+            postalCode: "",
+        }
     });
 
     const router = useRouter(); 
@@ -25,12 +32,17 @@ const CreateInstrument = () => {
         try {
             const response = await fetch("/api/instrument/new", {
                 method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
                     title: item.title,
                     userId: session?.user.id,
                     price: item.price,
                     description: item.description,
                     image: item.image,
+                    //adding address field
+                    address: item.address
                 }),
             })
             if (response.ok) {

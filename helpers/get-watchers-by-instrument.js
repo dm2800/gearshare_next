@@ -68,7 +68,12 @@ export const getFavoriteInstruments = async (watcherId) => {
         // const user = await User.find({_id: watcherId}); 
 
         //get all instruments
-        const user =  await User.findById(watcherId).populate('favorites').exec();
+        const user =  await User.findById(watcherId).populate({
+            path: 'favorites',
+            populate: {
+                path: 'creator'
+            }    
+        }).exec();
 
         if (!user) {
             throw new Error ('User not found'); 

@@ -25,7 +25,7 @@ export const GET = async (request, { params }) => {
 
 // PATCH (update)
 export const PATCH = async (request, { params }) => {
-    const { title, price, description, image } = await request.json();
+    const { title, price, description, image, address } = await request.json();
 
     try {
         await connectToDB();
@@ -39,6 +39,7 @@ export const PATCH = async (request, { params }) => {
         existingInstrument.price = price;
         existingInstrument.description = description;
         existingInstrument.image = image;
+        existingInstrument.address = address;
 
         await existingInstrument.save();
 

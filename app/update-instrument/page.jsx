@@ -12,6 +12,12 @@ const EditInstrument = () => {
         price: "",
         description: "",
         image: "",
+        address:  {
+            streetAddress: "", 
+            city: "", 
+            state: "", 
+            postalCode: ""
+        }
     });
 
     const router = useRouter(); 
@@ -29,7 +35,8 @@ const EditInstrument = () => {
             setItem({title: data.title, 
             price: data.price, 
             description: data.description, 
-            image: data.image
+            image: data.image,
+            address: data.address
             })
         }
 
@@ -47,11 +54,13 @@ const EditInstrument = () => {
         try {
             const response = await fetch(`/api/instrument/${instrumentId}`, {
                 method: "PATCH",
+                headers: {'Content-Type' : 'application/json'},
                 body: JSON.stringify({
                     title: item.title,
                     price: item.price,
                     description: item.description,
                     image: item.image,
+                    address: item.address
                 }),
             })
             if (response.ok) {
@@ -67,7 +76,7 @@ const EditInstrument = () => {
     return (
         <div className="text-center">
             <Form
-                type="Edit"
+                type="Update"
                 item={item}
                 setItem={setItem}
                 submitting={submitting}

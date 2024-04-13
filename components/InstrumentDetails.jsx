@@ -206,7 +206,7 @@ const InstrumentDetails = ({instrumentId}) => {
                             <button type="button" className="book_btn" onClick={() => pairInstrument(instrumentId)}>
                                 {daysTotal
                                     ? `Book for ${daysTotal} days x $${instrument.price
-                                    } = ${daysTotal * instrument.price}`
+                                    } = $${daysTotal * instrument.price}`
                                     : `Book`}
                             </button>
                         </Link>

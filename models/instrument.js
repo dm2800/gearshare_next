@@ -1,6 +1,15 @@
 import {Schema, model, models} from "mongoose";
 
 
+//Adding address field as a subdocument
+const addressSchema = new Schema({
+    streetAddress: { type: String, required: [true, "Street address is required."]}, 
+    city: {type: String, required: [true, "City is required."]}, 
+    state: {type: String, required: [true, "State is required."]}, 
+    postalCode: { type: String, required: [true, "Postal code is required."]}
+}); 
+
+
 const InstrumentSchema = new Schema({
     creator: {
         type: Schema.Types.ObjectId,
@@ -23,6 +32,7 @@ const InstrumentSchema = new Schema({
         type: String,
         required: [true, "Image required."],
     },
+    address: addressSchema
 })
 
 export {InstrumentSchema}; 
